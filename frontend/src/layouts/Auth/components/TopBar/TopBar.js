@@ -12,7 +12,7 @@ function TopBar() {
           color="inherit"
           style={{ paddingLeft: "10px" }}
         >
-          ESKO Seating Bus
+          ESKO Seating Bus Application
         </Typography>
       </Toolbar>
     </AppBar>

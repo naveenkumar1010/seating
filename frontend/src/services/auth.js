@@ -13,7 +13,8 @@ function login(username, password) {
       password,
     })
     .then(response => {
-      localStorage.setItem("user", JSON.stringify(response.data.user));
+      console.log("working fine")
+      localStorage.setItem("user", JSON.stringify(response.data.data.firstname));
       return response.data;
     });
 }

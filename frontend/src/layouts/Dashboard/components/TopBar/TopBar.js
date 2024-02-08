@@ -47,12 +47,14 @@ function TopBar(props) {
         <Typography variant="h5" color="inherit" style={{paddingLeft: '10px'}}>React Admin Panel</Typography>
         <div className={classes.flexGrow} />
         <Button color="inherit" variant="outlined" onClick={handleMenuOpen}>
-          {auth.user && `${auth.user.name}`}
+          {auth.user}
         </Button>
         <Menu open={Boolean(anchorEl)} onClose={handleMenuClose} anchorEl={anchorEl}>
           <MenuItem>Profile</MenuItem>
           <MenuItem>My Account</MenuItem>
-          <MenuItem><Link to="/auth/login"> Logout</Link></MenuItem>
+          <MenuItem><Link to="/auth/login" onClick={()=>{
+            localStorage.removeItem("user");
+          }}> Logout</Link></MenuItem>
         </Menu>
         <Hidden lgUp>
           <IconButton color="inherit" onClick={openMenu}>
