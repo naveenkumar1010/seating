@@ -9,6 +9,7 @@ import {
   Paper,
 } from "@material-ui/core";
 import { Home } from "@material-ui/icons";
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import clsx from "clsx";
 import React from "react";
 import { Fragment } from "react";
@@ -64,6 +65,12 @@ function NavBar(props) {
                 <AppsIcon />
               </ListItemIcon>
               <ListItemText>Table</ListItemText>
+            </ListItem>
+            <ListItem component={Link} to="/usermanagement">
+              <ListItemIcon>
+                <PeopleAltIcon />
+              </ListItemIcon>
+              <ListItemText>Manage User</ListItemText>
             </ListItem>
           </List>
         </Paper>
