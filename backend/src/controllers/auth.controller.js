@@ -1,6 +1,6 @@
-const User = require('../models/user.model');
+const User = require('../models/user');
 const { hash: hashPassword, compare: comparePassword } = require('../utils/password');
-const { generate: generateToken } = require('../utils/token');
+const { generate: generateToken, decode: decodeToken } = require('../utils/token');
 
 exports.signup = (req, res) => {
     const { firstname, lastname, email, password } = req.body;
@@ -46,14 +46,20 @@ exports.signin = (req, res) => {
         }
         if (data) {
             if (comparePassword(password.trim(), data.password)) {
-                const token = generateToken(data.id);
+                const token = generateToken(data.id,data.email);
+                let temp = decodeToken(token);
+                let flag = false;
+                if(temp.email==="mani@esko.com"){
+                        flag=true
+                }
                 res.status(200).send({
                     status: 'success',
                     data: {
                         token,
                         firstname: data.firstname,
                         lastname: data.lastname,
-                        email: data.email
+                        email: data.email,
+                        isAdmin: flag
                     }
                 });
                 return;

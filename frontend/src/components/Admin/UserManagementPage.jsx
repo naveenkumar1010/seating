@@ -6,6 +6,8 @@ import EditUserPopup from "./EditUserPopup"; // Import the EditUserPopup compone
 
 const UserManagementPage = () => {
   const [users, setUsers] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10); // Number of items to display per page
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
@@ -36,7 +38,7 @@ const UserManagementPage = () => {
         firstName: "Sneha",
         lastName: "Thiyagarajan",
         email: "snehat@esko.com",
-        
+
         role: "DevOps",
       },
       {
@@ -44,7 +46,7 @@ const UserManagementPage = () => {
         firstName: "JegaVarsan",
         lastName: "AnnaThurai",
         email: "jegavarsan@esko.com",
-        
+
         role: "TechOps",
       },
       {
@@ -52,7 +54,7 @@ const UserManagementPage = () => {
         firstName: "Chaarvika",
         lastName: "Arunachalam",
         email: "chaarvika@esko.com",
-        
+
         role: "TechOps",
       },
       {
@@ -60,7 +62,7 @@ const UserManagementPage = () => {
         firstName: "Jaivignesh",
         lastName: "GK",
         email: "jv@esko.com",
-        
+
         role: "DevOps",
       },
       {
@@ -68,7 +70,7 @@ const UserManagementPage = () => {
         firstName: "Harsh",
         lastName: "Patel",
         email: "harsh@esko.com",
-        
+
         role: "TechOps",
       },
       {
@@ -76,7 +78,7 @@ const UserManagementPage = () => {
         firstName: "NaveenKumar",
         lastName: "RR",
         email: "naveen@esko.com",
-        
+
         role: "TechOps",
       },
       {
@@ -84,7 +86,7 @@ const UserManagementPage = () => {
         firstName: "Uva",
         lastName: "Roobini",
         email: "uva@esko.com",
-        
+
         role: "DevOps",
       },
       {
@@ -92,7 +94,7 @@ const UserManagementPage = () => {
         firstName: "Lakshana",
         lastName: "Sivakumar",
         email: "lakshana@esko.com",
-        
+
         role: "TechOps",
       },
       {
@@ -100,7 +102,7 @@ const UserManagementPage = () => {
         firstName: "Kevin",
         lastName: "Marshal",
         email: "kevin@esko.com",
-        
+
         role: "DevOps",
       },
       {
@@ -108,7 +110,7 @@ const UserManagementPage = () => {
         firstName: "Jane",
         lastName: "Smith",
         email: "jane@esko.com",
-        
+
         role: "TechOps",
       },
       {
@@ -116,13 +118,25 @@ const UserManagementPage = () => {
         firstName: "Mark",
         lastName: "Henry",
         email: "markhenry@esko.com",
-        
+
         role: "DevOps",
-      }
+      },
       // Add more static user data as needed
     ];
     setUsers(staticUsers);
   }, []);
+
+  // Calculate the index of the last item to display on the current page
+  const indexOfLastItem = currentPage * itemsPerPage;
+  // Calculate the index of the first item to display on the current page
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // Get the current page of users
+  const currentUsers = users.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Pagination functions
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const nextPage = () => setCurrentPage((prevPage) => prevPage + 1);
+  const prevPage = () => setCurrentPage((prevPage) => prevPage - 1);
 
   const handleEditUser = (user) => {
     setSelectedUser(user);
@@ -231,21 +245,48 @@ const UserManagementPage = () => {
           </tr>
         </thead>
         <tbody>
-          {filteredUsers.map((user) => (
-            <tr key={user.id}>
-              <td>{user.id}</td>
-              <td>{user.firstName}</td>
-              <td>{user.lastName}</td>
-              <td>{user.email}</td>
-              <td>{user.role}</td>
-              <td>
-                <button onClick={() => handleEditUser(user)}>Edit</button>
-                <button onClick={() => handleDeleteUser(user)}>Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+  {currentUsers.map((user) => (
+    <tr key={user.id}>
+      <td>{user.id}</td>
+      <td>{user.firstName}</td>
+      <td>{user.lastName}</td>
+      <td>{user.email}</td>
+      <td>{user.role}</td>
+      <td>
+        <button onClick={() => handleEditUser(user)}>Edit</button>
+        <button onClick={() => handleDeleteUser(user)}>Delete</button>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
       </table>
+
+      {/* Pagination */}
+      <div className="pagination">
+        <button onClick={prevPage} disabled={currentPage === 1}>
+          Previous
+        </button>
+        {/* Render page numbers */}
+        {Array.from({ length: Math.ceil(users.length / itemsPerPage) }).map(
+          (number, index) => (
+            <button
+              key={index}
+              onClick={() => paginate(index + 1)}
+              className={currentPage === index + 1 ? "active" : ""}
+            >
+              {index + 1}
+            </button>
+          )
+        )}
+        <button
+          onClick={nextPage}
+          disabled={currentPage === Math.ceil(users.length / itemsPerPage)}
+        >
+          Next
+        </button>
+      </div>
+
       {/* Render edit user popup if showEditPopup is true */}
       {showEditPopup && (
         <EditUserPopup
