@@ -3,6 +3,7 @@ const validatorHandler = require('../middlewares/validatorHandler');
 
 const signup = (req, res, next) => {
     const schema = Joi.object().keys({
+        id: Joi.number(),
         firstname: Joi.string()
             .trim()
             .alphanum()

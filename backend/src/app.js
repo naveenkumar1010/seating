@@ -4,7 +4,12 @@ const cors = require('cors');
 
 const authRoute = require('./routes/auth.route');
 
+const adminRoute = require('./routes/admin.route')
+
 const { httpLogStream } = require('./utils/logger');
+
+//Database
+const sequelize = require ('./utils/database')
 
 const app = express();
 
@@ -28,6 +33,17 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use((req, res, next) => {
+res.header("Access-Control-Allow-Origin", "*");
+res.header("Access-Control-Allow-Headers", "*");
+if (req.method === "OPTIONS") {
+    res.header("Access-COntrol-Allow-Methods", "PUT,POST,GET,PATCH,DELETE");
+    return res.status(200).json({});
+}
+next();
+});
+
+app.use('/admin',adminRoute)
 app.use('/api/auth', authRoute);
 
 app.get('/', (req, res) => {
@@ -46,5 +62,10 @@ app.use((err, req, res, next) => {
     });
     next();
 });
+sequelize.sync().then(result=>{
+    console.log(result);
+}).catch(err=>{
+    console.log(err);
+})
 
 module.exports = app;

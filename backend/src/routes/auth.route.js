@@ -7,7 +7,8 @@ const authController = require('../controllers/auth.controller');
 const { logger } = require('../utils/logger');
 
 router.route('/signup')
-    .post(signupValidator, asyncHandler(checkEmail), asyncHandler(authController.signup));
+    // .post(signupValidator, asyncHandler(checkEmail), asyncHandler(authController.signup));
+    .post(signupValidator,asyncHandler(checkEmail), asyncHandler(authController.signup))
 
 router.route('/signin')
     .post(signinValidator, asyncHandler(authController.signin));

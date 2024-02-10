@@ -65,6 +65,12 @@ function NavBar(props) {
               </ListItemIcon>
               <ListItemText>Table</ListItemText>
             </ListItem>
+            <ListItem component={Link} to="/usermanagement">
+              <ListItemIcon>
+                <AppsIcon />
+              </ListItemIcon>
+              <ListItemText>Manage Users</ListItemText>
+            </ListItem>
           </List>
         </Paper>
       </Hidden>

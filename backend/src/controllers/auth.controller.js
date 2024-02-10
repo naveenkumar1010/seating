@@ -1,68 +1,70 @@
-const User = require('../models/user.model');
+const User = require('../models/user');
 const { hash: hashPassword, compare: comparePassword } = require('../utils/password');
-const { generate: generateToken } = require('../utils/token');
+const { generate: generateToken, decode: decodeToken } = require('../utils/token');
+
 
 exports.signup = (req, res) => {
-    const { firstname, lastname, email, password } = req.body;
-    const hashedPassword = hashPassword(password.trim());
 
-    const user = new User(firstname.trim(), lastname.trim(), email.trim(), hashedPassword);
+    var hashpass = hashPassword(req.body.password);
 
-    User.create(user, (err, data) => {
-        if (err) {
-            res.status(500).send({
-                status: "error",
-                message: err.message
-            });
-        } else {
-            const token = generateToken(data.id);
-            res.status(201).send({
-                status: "success",
-                data: {
-                    token,
-                    data
-                }
-            });
-        }
-    });
+    var data={
+        "id":req.body.id,
+        "firstname":req.body.firstname,
+        "lastname":req.body.lastname,
+        "email":req.body.email,
+        "password":hashpass
+    }
+    User.create(data).then(data=>{
+        res.status(200).json({
+            status:"success",
+            message:"User added",
+            data:data
+        })
+    })
+    .catch((err)=>{
+        return res.status(400).json({
+            status:"failure",
+            error:err
+        })
+    })
 };
 
 exports.signin = (req, res) => {
-    const { email, password } = req.body;
-    User.findByEmail(email.trim(), (err, data) => {
-        if (err) {
-            if (err.kind === "not_found") {
-                res.status(404).send({
-                    status: 'error',
-                    message: `User with email ${email} was not found`
-                });
-                return;
-            }
-            res.status(500).send({
-                status: 'error',
-                message: err.message
-            });
-            return;
+    const {email,password:pass}=req.body;
+    User.findOne({
+        where:{
+            email:email
         }
-        if (data) {
-            if (comparePassword(password.trim(), data.password)) {
-                const token = generateToken(data.id);
-                res.status(200).send({
-                    status: 'success',
-                    data: {
-                        token,
-                        firstname: data.firstname,
-                        lastname: data.lastname,
-                        email: data.email
-                    }
-                });
-                return;
-            }
-            res.status(401).send({
-                status: 'error',
-                message: 'Incorrect password'
+      })
+        .then((data) => {
+          console.log("DATA" + data);
+          if (!data) {
+            return res.status(400).json({
+                status:"Failure",
+                message:"No email id found"
             });
-        }
-    });
-
+          } else {
+            var hashpass_db=data.password;
+            if(comparePassword(pass,hashpass_db)){
+                return res.status(200).json({
+                    status:"success",
+                    message: "Logged In Successfully",
+                    data:data
+                  });
+            }
+            else{
+                return res.status(400).json({
+                    status:"Failure",
+                    message: "GMAIL AND PASSWORD NOT MATCHED !!",
+                });
+            }
+          }
+        })
+        .catch((err) => {
+          console.log("Login Failed");
+          return res.status(400).json({
+            status:"Failure",
+            error:err.message
+          })
+        });
 }
