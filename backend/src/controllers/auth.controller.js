@@ -3,28 +3,26 @@ const { hash: hashPassword, compare: comparePassword } = require('../utils/passw
 const { generate: generateToken, decode: decodeToken } = require('../utils/token');
 
 exports.signup = (req, res) => {
-    const { firstname, lastname, email, password } = req.body;
-    const hashedPassword = hashPassword(password.trim());
-
-    const user = new User(firstname.trim(), lastname.trim(), email.trim(), hashedPassword);
-
-    User.create(user, (err, data) => {
-        if (err) {
-            res.status(500).send({
-                status: "error",
-                message: err.message
-            });
-        } else {
-            const token = generateToken(data.id);
-            res.status(201).send({
-                status: "success",
-                data: {
-                    token,
-                    data
-                }
-            });
-        }
-    });
+    var data={
+        "id":req.body.id,
+        "firstname":req.body.firstname,
+        "lastname":req.body.lastname,
+        "email":req.body.email,
+        "password":req.body.password
+    }
+    User.create(data).then(data=>{
+        res.status(200).json({
+            status:"success",
+            message:"User added",
+            data:data
+        })
+    })
+    .catch((err)=>{
+        return res.status(400).json({
+            status:"failure",
+            error:err
+        })
+    })
 };
 
 exports.signin = (req, res) => {
