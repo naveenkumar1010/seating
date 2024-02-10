@@ -53,16 +53,23 @@
 const Sequelize = require('sequelize')
 const sequelize = require ('../utils/database')
 const User = sequelize.define('user',{
-    id:{
+    associate_id:{
         type:Sequelize.INTEGER,
         allowNull: false,
         primaryKey:true
     },
-    firstname: Sequelize.STRING,
-    lastname: Sequelize.STRING,
+    associate: Sequelize.STRING,
+    localsystemid: Sequelize.STRING,
     email:Sequelize.STRING,
-    password:Sequelize.STRING,
-    created_one:Sequelize.STRING
+    manager_id:Sequelize.STRING,
+    manager_name:Sequelize.STRING,
+    manager_email:Sequelize.STRING,
+    ismanager:Sequelize.BOOLEAN,
+    isAdmin:Sequelize.BOOLEAN,
+    direct_reports:Sequelize.INTEGER,
+    company:Sequelize.STRING,
+    OpCo:Sequelize.STRING
+
 });
 
 module.exports = User
