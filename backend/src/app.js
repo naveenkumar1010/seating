@@ -32,6 +32,17 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     next();
 });
+
+app.use((req, res, next) => {
+res.header("Access-Control-Allow-Origin", "*");
+res.header("Access-Control-Allow-Headers", "*");
+if (req.method === "OPTIONS") {
+    res.header("Access-COntrol-Allow-Methods", "PUT,POST,GET,PATCH,DELETE");
+    return res.status(200).json({});
+}
+next();
+});
+
 app.use('/admin',adminRoute)
 app.use('/api/auth', authRoute);
 
