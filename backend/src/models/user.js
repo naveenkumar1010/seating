@@ -60,7 +60,10 @@ const User = sequelize.define('user',{
     },
     firstname: Sequelize.STRING,
     lastname: Sequelize.STRING,
-    email:Sequelize.STRING,
+    email:{
+        type:Sequelize.STRING,
+        primaryKey:true
+    },
     password:Sequelize.STRING,
     created_one:Sequelize.STRING
 });

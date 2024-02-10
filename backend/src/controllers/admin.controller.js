@@ -1,13 +1,27 @@
 const {Sequelize} = require('sequelize')
 const User = require('../models/user');
 
-exports.addUser = (req, res, next)=>{
-    const firstname = req.body.firstname;
-    const lastname = req.body.lastname;
-    const email = req.body.email;
-    const password = req.body.password;
-    const id = req.body.id;
-    User.create({firstname:firstname,lastname:lastname,email:email,password:password,id:id});
+exports.addUser = async(req, res, next)=>{
+    var data={
+        "id":req.body.id,
+        "firstname":req.body.firstname,
+        "lastname":req.body.lastname,
+        "email":req.body.email,
+        "password":req.body.password
+    }
+    User.create(data).then(data=>{
+        res.status(200).json({
+            status:"success",
+            message:"User added",
+            data:data
+        })
+    })
+    .catch(err=>{
+        return res.status(400).json({
+            status:"failure",
+            error:err
+        })
+    })
 }
 
 exports.getUsers = (req, res, next)=>{
@@ -20,45 +34,79 @@ exports.getUsers = (req, res, next)=>{
         });
     })
 }
-exports.getUser = (req, res, next)=>{
-    const userid = req.body.id;
-    User.findByPk(userid).then(user=>
-        res.status(200).send({
-            status:"success",
-            data:{
-                user:user
+exports.getUser = async(req, res, next)=>{
+    try {
+        var getid=req.params.id;
+        const data =await User.findOne({
+            where:{
+                id:getid
             }
         })
-    )
+        if(data){
+            return res.status(200).json({
+            status:"success",
+            data:data
+            })
+        }
+        else{
+            return res.status(200).json({
+                status:"success",
+                data:`There is no Employee with id ${getid}`
+                })
+        }
+    } catch (err) {
+        return res.status(400).json({
+            status:"failure",
+            error:err
+        })
+    }
+    
 }
 
 exports.editUser = (req, res, next)=>{
-    const userid = req.body.id;
+    const userid = req.params.id;
     const firstname = req.body.firstname;
     const lastname = req.body.lastname;
-    const email = req.body.email;
     const password = req.body.password;
     User.findByPk(userid).then(user=>
        {
         user.firstname = firstname;
         user.lastname = lastname;
-        user.email = email;
         user.password = password;
-        return user.save()
-       }
-    ).then(result=>{
+        user.save()
         console.log("Updated the user!");
-    }).catch(err=>console.log(err))
+        return res.status(200).json({
+            status:"success",
+            message:"User updated successfully",
+            data:user
+        })
+       }
+    )
+    .catch(err=>{
+        return res.status(400).json({
+            status:"failure",
+            error:err
+        })
+    })
 }
 
 exports.deleteUser = (req,res,next)=>{
     const userid = req.body.id;
     User.findByPk(userid).then(user=>{
-       return user.destroy();
-    }).then(result=>{
-        console.log("Deleted the user!");
-    }).catch(err=>{
-        console.log(err);
+       user.destroy();
+       console.log(user);
+       console.log("Deleted the user!");
+       return res.status(200).json({
+        status:"success",
+        message:"User deleted successfully",
+        data:user
+    })
+    })
+    .catch(err=>{
+        return res.status(400).json({
+            status:"failure",
+            error:err
+        })
     })
 }
 
