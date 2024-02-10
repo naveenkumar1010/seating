@@ -7,5 +7,5 @@ router.route('/add-user').post(adminController.addUser);
 router.route('/get-users').get(adminController.getUsers);
 router.route('/get-user/:id').get(adminController.getUser);
 router.route('/edit-user/:id').patch(adminController.editUser);
-router.route('/delete-user').patch(adminController.deleteUser);
+router.route('/delete-user/:id').delete(adminController.deleteUser);
 module.exports = router;

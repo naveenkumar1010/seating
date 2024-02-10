@@ -91,7 +91,7 @@ exports.editUser = (req, res, next)=>{
 }
 
 exports.deleteUser = (req,res,next)=>{
-    const userid = req.body.id;
+    const userid = req.params.id;
     User.findByPk(userid).then(user=>{
        user.destroy();
        console.log(user);

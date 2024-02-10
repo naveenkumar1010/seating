@@ -16,114 +16,7 @@ const UserManagementPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    // Fetch users from the backend (to be implemented later)
-    // For now, use static data
-    const staticUsers = [
-      {
-        id: 1,
-        firstName: "Sriram",
-        lastName: "Venkatraman",
-        email: "sriramv@esko.com",
-        role: "DevOps",
-      },
-      {
-        id: 2,
-        firstName: "Surya",
-        lastName: "Thondimuthu",
-        email: "suryat@esko.com",
-        role: "DevOps",
-      },
-      {
-        id: 3,
-        firstName: "Sneha",
-        lastName: "Thiyagarajan",
-        email: "snehat@esko.com",
-
-        role: "DevOps",
-      },
-      {
-        id: 4,
-        firstName: "JegaVarsan",
-        lastName: "AnnaThurai",
-        email: "jegavarsan@esko.com",
-
-        role: "TechOps",
-      },
-      {
-        id: 5,
-        firstName: "Chaarvika",
-        lastName: "Arunachalam",
-        email: "chaarvika@esko.com",
-
-        role: "TechOps",
-      },
-      {
-        id: 6,
-        firstName: "Jaivignesh",
-        lastName: "GK",
-        email: "jv@esko.com",
-
-        role: "DevOps",
-      },
-      {
-        id: 7,
-        firstName: "Harsh",
-        lastName: "Patel",
-        email: "harsh@esko.com",
-
-        role: "TechOps",
-      },
-      {
-        id: 8,
-        firstName: "NaveenKumar",
-        lastName: "RR",
-        email: "naveen@esko.com",
-
-        role: "TechOps",
-      },
-      {
-        id: 9,
-        firstName: "Uva",
-        lastName: "Roobini",
-        email: "uva@esko.com",
-
-        role: "DevOps",
-      },
-      {
-        id: 10,
-        firstName: "Lakshana",
-        lastName: "Sivakumar",
-        email: "lakshana@esko.com",
-
-        role: "TechOps",
-      },
-      {
-        id: 11,
-        firstName: "Kevin",
-        lastName: "Marshal",
-        email: "kevin@esko.com",
-
-        role: "DevOps",
-      },
-      {
-        id: 12,
-        firstName: "Jane",
-        lastName: "Smith",
-        email: "jane@esko.com",
-
-        role: "TechOps",
-      },
-      {
-        id: 13,
-        firstName: "Mark",
-        lastName: "Henry",
-        email: "markhenry@esko.com",
-
-        role: "DevOps",
-      },
-      // Add more static user data as needed
-    ];
-    setUsers(staticUsers);
+    
   }, []);
 
   // Calculate the index of the last item to display on the current page
@@ -308,3 +201,117 @@ const UserManagementPage = () => {
 };
 
 export default UserManagementPage;
+
+
+
+
+
+
+// Fetch users from the backend (to be implemented later)
+    // For now, use static data
+    // const staticUsers = [
+    //   {
+    //     id: 1,
+    //     firstName: "Sriram",
+    //     lastName: "Venkatraman",
+    //     email: "sriramv@esko.com",
+    //     role: "DevOps",
+    //   },
+    //   {
+    //     id: 2,
+    //     firstName: "Surya",
+    //     lastName: "Thondimuthu",
+    //     email: "suryat@esko.com",
+    //     role: "DevOps",
+    //   },
+    //   {
+    //     id: 3,
+    //     firstName: "Sneha",
+    //     lastName: "Thiyagarajan",
+    //     email: "snehat@esko.com",
+
+    //     role: "DevOps",
+    //   },
+    //   {
+    //     id: 4,
+    //     firstName: "JegaVarsan",
+    //     lastName: "AnnaThurai",
+    //     email: "jegavarsan@esko.com",
+
+    //     role: "TechOps",
+    //   },
+    //   {
+    //     id: 5,
+    //     firstName: "Chaarvika",
+    //     lastName: "Arunachalam",
+    //     email: "chaarvika@esko.com",
+
+    //     role: "TechOps",
+    //   },
+    //   {
+    //     id: 6,
+    //     firstName: "Jaivignesh",
+    //     lastName: "GK",
+    //     email: "jv@esko.com",
+
+    //     role: "DevOps",
+    //   },
+    //   {
+    //     id: 7,
+    //     firstName: "Harsh",
+    //     lastName: "Patel",
+    //     email: "harsh@esko.com",
+
+    //     role: "TechOps",
+    //   },
+    //   {
+    //     id: 8,
+    //     firstName: "NaveenKumar",
+    //     lastName: "RR",
+    //     email: "naveen@esko.com",
+
+    //     role: "TechOps",
+    //   },
+    //   {
+    //     id: 9,
+    //     firstName: "Uva",
+    //     lastName: "Roobini",
+    //     email: "uva@esko.com",
+
+    //     role: "DevOps",
+    //   },
+    //   {
+    //     id: 10,
+    //     firstName: "Lakshana",
+    //     lastName: "Sivakumar",
+    //     email: "lakshana@esko.com",
+
+    //     role: "TechOps",
+    //   },
+    //   {
+    //     id: 11,
+    //     firstName: "Kevin",
+    //     lastName: "Marshal",
+    //     email: "kevin@esko.com",
+
+    //     role: "DevOps",
+    //   },
+    //   {
+    //     id: 12,
+    //     firstName: "Jane",
+    //     lastName: "Smith",
+    //     email: "jane@esko.com",
+
+    //     role: "TechOps",
+    //   },
+    //   {
+    //     id: 13,
+    //     firstName: "Mark",
+    //     lastName: "Henry",
+    //     email: "markhenry@esko.com",
+
+    //     role: "DevOps",
+    //   },
+    //   // Add more static user data as needed
+    // ];
+    // setUsers(staticUsers);
