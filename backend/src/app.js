@@ -2,9 +2,15 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 
+//Models
+const User = require('./models/user');
+const BookSeat = require('./models/seat_booking');
+
 const authRoute = require('./routes/auth.route');
 
-const adminRoute = require('./routes/admin.route')
+const adminRoute = require('./routes/admin.route');
+
+const bookSeatRoute = require('./routes/book-seat.route');
 
 const { httpLogStream } = require('./utils/logger');
 
@@ -33,6 +39,7 @@ app.use((req, res, next) => {
     next();
 });
 app.use('/admin',adminRoute)
+app.use(bookSeatRoute);
 app.use('/api/auth', authRoute);
 
 app.get('/', (req, res) => {

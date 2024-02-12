@@ -1,5 +1,6 @@
 const {Sequelize} = require('sequelize')
 const User = require('../models/user');
+const { hash: hashPassword, compare: comparePassword } = require('../utils/password');
 
 exports.addUser = (req, res, next)=>{
     const associate = req.body.associate;
@@ -14,12 +15,13 @@ exports.addUser = (req, res, next)=>{
     const direct_reports = req.body.direct_reports;
     const company = req.body.company;
     const OpCo = req.body.OpCo;
-    const password = req.body.pasword;
+    const password = req.body.password;
+    const hashedPassword = hashPassword(password.trim());
     
     User.create({
         associate:associate,
         associate_id:associate_id,
-        password:password,
+        password:hashedPassword,
         localsystemid:localsystemid,
         email:email,
         manager_id:manager_id,

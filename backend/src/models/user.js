@@ -58,9 +58,14 @@ const User = sequelize.define('user',{
         allowNull: false,
         primaryKey:true
     },
+    password:Sequelize.STRING,
     associate: Sequelize.STRING,
     localsystemid: Sequelize.STRING,
-    email:Sequelize.STRING,
+    email:{
+        type:Sequelize.STRING,
+        allowNull: false,
+        primaryKey:true
+    },
     manager_id:Sequelize.STRING,
     manager_name:Sequelize.STRING,
     manager_email:Sequelize.STRING,
@@ -71,5 +76,4 @@ const User = sequelize.define('user',{
     OpCo:Sequelize.STRING
 
 });
-
 module.exports = User
