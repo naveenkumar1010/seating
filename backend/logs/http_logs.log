@@ -1,1 +1,2 @@
-::1 - - [12/Feb/2024:14:59:38 +0000] "POST /book-seat HTTP/1.1" 200 306 "-" "PostmanRuntime/7.32.1"
+::1 - - [12/Feb/2024:18:30:53 +0000] "PATCH /edit-booking HTTP/1.1" 200 275 "-" "PostmanRuntime/7.32.1"
+::1 - - [12/Feb/2024:18:31:03 +0000] "PATCH /edit-booking HTTP/1.1" 200 275 "-" "PostmanRuntime/7.32.1"
