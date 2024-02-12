@@ -1,3 +1,1 @@
-::1 - - [12/Feb/2024:17:48:06 +0000] "DELETE /seats_info/delete-seat/WKS160 HTTP/1.1" 400 68 "-" "PostmanRuntime/7.32.1"
-::1 - - [12/Feb/2024:17:48:29 +0000] "DELETE /seats_info/delete-seat/WKS161 HTTP/1.1" 200 238 "-" "PostmanRuntime/7.32.1"
-::1 - - [12/Feb/2024:17:48:46 +0000] "DELETE /seats_info/delete-seat/WKS159 HTTP/1.1" 200 242 "-" "PostmanRuntime/7.32.1"
+::1 - - [12/Feb/2024:14:59:38 +0000] "POST /book-seat HTTP/1.1" 200 306 "-" "PostmanRuntime/7.32.1"

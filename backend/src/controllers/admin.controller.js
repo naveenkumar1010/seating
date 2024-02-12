@@ -2,11 +2,8 @@ const {Sequelize} = require('sequelize')
 const User = require('../models/user');
 const { hash: hashPassword, compare: comparePassword } = require('../utils/password');
 
-exports.addUser = async(req, res, next)=>{
-
-    var hashpass = hashPassword(req.body.password);
-
-    const associate_name = req.body.associate_name;
+exports.addUser = (req, res, next)=>{
+    const associate = req.body.associate;
     const associate_id = req.body.associate_id;
     const localsystemid = req.body.localsystemid;
     const email = req.body.email;
@@ -18,12 +15,13 @@ exports.addUser = async(req, res, next)=>{
     const direct_reports = req.body.direct_reports;
     const company = req.body.company;
     const OpCo = req.body.OpCo;
-    const password = hashpass;
-
+    const password = req.body.password;
+    const hashedPassword = hashPassword(password.trim());
+    
     User.create({
-        associate_name:associate_name,
+        associate:associate,
         associate_id:associate_id,
-        password:password,
+        password:hashedPassword,
         localsystemid:localsystemid,
         email:email,
         manager_id:manager_id,
@@ -34,24 +32,22 @@ exports.addUser = async(req, res, next)=>{
         direct_reports:direct_reports,
         company:company,
         OpCo:OpCo
-    }).then(data=>{
-        res.status(200).json({
+    }).then(result=>{
+        console.log("User has been created successfully!");
+        res.status(200).send({
             status:"success",
-            message:"User added",
-            data:data
-        })
-    })
-    .catch(err=>{
-        return res.status(400).json({
-            status:"failure",
-            error:err
-        })
-    })
+            data:{
+                result:result
+            }
+        });
+    }       
+    ).catch(err=>{
+        console.log(err);
+    });
 }
 
 exports.getUsers = (req, res, next)=>{
     User.findAll().then(users=>{
-        console.log(users)
         res.status(200).send({
             status: "success",
             data: {
@@ -60,41 +56,21 @@ exports.getUsers = (req, res, next)=>{
         });
     })
 }
-
-exports.getUser = async(req, res, next)=>{
-    try {
-        var getid=req.params.id;
-        const data =await User.findOne({
-            where:{
-                associate_id:getid
+exports.getUser = (req, res, next)=>{
+    const userid = req.body.associate_id;
+    User.findByPk(userid).then(user=>
+        res.status(200).send({
+            status:"success",
+            data:{
+                user:user
             }
         })
-        if(data){
-            return res.status(200).json({
-            status:"success",
-            data:data
-            })
-        }
-        else{
-            return res.status(200).json({
-                status:"success",
-                data:`There is no Employee with id ${getid}`
-                })
-        }
-    } catch (err) {
-        return res.status(400).json({
-            status:"failure",
-            error:err
-        })
-    }
-    
+    )
 }
 
 exports.editUser = (req, res, next)=>{
-
-    const associate_id = req.params.id;
-    
-    const associate_name = req.body.associate_name;
+    const associate = req.body.associate;
+    const associate_id = req.body.associate_id;
     const localsystemid = req.body.localsystemid;
     const email = req.body.email;
     const manager_id = req.body.manager_id;
@@ -106,14 +82,10 @@ exports.editUser = (req, res, next)=>{
     const company = req.body.company;
     const OpCo = req.body.OpCo;
     const password = req.body.pasword;
-
-    User.findOne({
-        where:{
-            associate_id:associate_id
-        }
-    }).then(user=>
+    User.findByPk(associate_id).then(user=>
        {
-        user.associate_name = associate_name;
+        user.associate = associate;
+        user.associate_id = associate_id;
         user.localsystemid = localsystemid;
         user.email = email;
         user.manager_id = manager_id;
@@ -125,50 +97,32 @@ exports.editUser = (req, res, next)=>{
         user.company = company;
         user.OpCo = OpCo;
         user.password = password;
-        user.save()
-        console.log("Updated the user!");
-        return res.status(200).json({
-            status:"success",
-            message:"User updated successfully",
-            data:user
-        })
+        return user.save()
        }
-    )
-    .catch(err=>{
-        return res.status(400).json({
-            status:"failure",
-            error:err.message
+    ).then(result=>{
+        res.status(200).send({
+            status:"success",
+            data:{
+                result:result
+            }
         })
-    })
+    }).catch(err=>console.log(err))
 }
 
 exports.deleteUser = (req,res,next)=>{
-    const userid = req.params.id;
-    User.findOne({
-        where:{
-            associate_id:userid
-        }
-    }).then(user=>{
-        if(!userid){
-            return res.status(400).json({
-                status:"success",
-                message:`There is no employee with id ${userid}`
-            })
-        }
-       user.destroy();
-       console.log(user);
-       console.log("Deleted the user!");
-       return res.status(200).json({
-        status:"success",
-        message:"User deleted successfully",
-        data:user
-    })
-    })
-    .catch(err=>{
-        return res.status(400).json({
-            status:"failure",
-            error:err
+    const userid = req.body.associate_id;
+    User.findByPk(userid).then(user=>{
+       return user.destroy();
+    }).then(result=>{
+        console.log("Deleted the user!");
+        res.status(200).send({
+            status:"success",
+            data:{
+                result:result
+            }
         })
+    }).catch(err=>{
+        console.log(err);
     })
 }
 

@@ -2,9 +2,16 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 
+//Models
+const User = require('./models/user');
+const BookSeat = require('./models/seat_booking');
+const CancelBooking = require('./models/cancel_booking');
+
 const authRoute = require('./routes/auth.route');
 
-const adminRoute = require('./routes/admin.route')
+const adminRoute = require('./routes/admin.route');
+
+const bookSeatRoute = require('./routes/book-seat.route');
 
 const seat_info_route= require('./routes/seats_info.route')
 
@@ -46,6 +53,7 @@ next();
 });
 
 app.use('/admin',adminRoute)
+app.use(bookSeatRoute);
 app.use('/api/auth', authRoute);
 app.use('/seats_info',seat_info_route);
 
