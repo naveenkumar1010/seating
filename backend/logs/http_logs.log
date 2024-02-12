@@ -1,4 +1,0 @@
-::1 - - [11/Feb/2024:07:37:36 +0000] "DELETE /admin/delete-user/755 HTTP/1.1" 200 538 "-" "PostmanRuntime/7.32.1"
-::1 - - [11/Feb/2024:07:39:15 +0000] "OPTIONS /api/auth/signin HTTP/1.1" 204 0 "http://localhost:3005/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
-::1 - - [11/Feb/2024:07:39:15 +0000] "POST /api/auth/signin HTTP/1.1" 200 525 "http://localhost:3005/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
-::1 - - [11/Feb/2024:07:39:18 +0000] "GET /admin/get-users HTTP/1.1" 200 502 "http://localhost:3005/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
