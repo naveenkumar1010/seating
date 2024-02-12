@@ -1,5 +1,6 @@
 const {Sequelize} = require('sequelize')
 const seats_info = require('../models/seats_info');
+const { set } = require('../app');
 
 exports.add_seat=(req,res,next)=>{
 
@@ -53,6 +54,32 @@ exports.add_seat=(req,res,next)=>{
 }
 
 
-exports.edit_seat=(req,res,next)=>{
-    let data =req.body.email;
+exports.delete_seat=(req,res,next)=>{
+    var seat_number=req.params.seat_number.toString();
+    seats_info.findOne({
+        where:{
+            seat_number:seat_number
+        }
+    })
+    .then((data)=>{
+        if(!data){
+            return res.status(400).json({
+                status:"failure",
+                message:`There is no seat with number ${seat_number}`
+            })
+        }
+        data.destroy();
+        console.log(`Deleted the seat ${seat_number}`)
+        return res.status(200).json({
+            status:"success",
+            message:`Seat ${seat_number} deleted successfully`,
+            data:data
+        })
+    })
+    .catch((err)=>{
+        return res.status(400).json({
+            status:"failure",
+            error:err.message
+        })
+    })
 }
