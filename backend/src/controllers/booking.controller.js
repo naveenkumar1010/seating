@@ -1,9 +1,11 @@
 const seat_book = require('../models/seat_booking');
+const cancel_booking = require('../models/cancel_booking');
+
 exports.book_seat = (req,res,next)=>{
     const reqBody = req.body;
     const seat_number = reqBody.seat_number;
     const booking_id = reqBody.booking_id;
-    const seat_selection_date = reqBody.seat_selection_date_date;
+    const seat_selection_date = reqBody.seat_selection_date;
     const seat_booking_satus = reqBody.seat_booking_status;
     const seat_status = reqBody.seat_status;
     const seat_booked_by = reqBody.seat_booked_by;
@@ -90,4 +92,34 @@ exports.edit_booking = (req,res,next)=>{
     }).catch(err=>{
         console.log(err);
     })
+};
+
+exports.cancel_booking = (req,res,next)=>{
+    const reqBody = req.body;
+    const seat_number = reqBody.seat_number;
+    const booking_id = reqBody.booking_id;
+    const seat_cancellation_date = reqBody.seat_cancellation_date;
+    const seat_cancelled_by = reqBody.seat_cancelled_by;
+    const status = reqBody.status;
+    const created_by = reqBody.created_by;
+    const updated_by = reqBody.updated_by;
+    cancel_booking.create({
+        seat_number:seat_number,
+        booking_id:booking_id,
+        seat_cancellation_date:seat_cancellation_date,
+        seat_cancelled_by:seat_cancelled_by,
+        status:status,
+        seat_cancelled_by:seat_cancelled_by,
+        created_by:created_by,
+        updated_by:updated_by
+
+    }).then(result=>{console.log(result);
+    res.status(200).send({
+        status:"success",
+        data:{
+            result:result
+        }
+    })}).catch(err=>{
+        console.log(err);
+    });
 };

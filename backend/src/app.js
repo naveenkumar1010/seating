@@ -5,6 +5,7 @@ const cors = require('cors');
 //Models
 const User = require('./models/user');
 const BookSeat = require('./models/seat_booking');
+const CancelBooking = require('./models/cancel_booking');
 
 const authRoute = require('./routes/auth.route');
 

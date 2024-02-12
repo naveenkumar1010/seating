@@ -1,1 +1,1 @@
-::1 - - [12/Feb/2024:14:10:57 +0000] "DELETE /delete-booking HTTP/1.1" 200 303 "-" "PostmanRuntime/7.32.1"
+::1 - - [12/Feb/2024:14:59:38 +0000] "POST /book-seat HTTP/1.1" 200 306 "-" "PostmanRuntime/7.32.1"
