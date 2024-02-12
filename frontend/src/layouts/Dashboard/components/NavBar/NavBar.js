@@ -9,12 +9,11 @@ import {
   Paper,
 } from "@material-ui/core";
 import { Home } from "@material-ui/icons";
-import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import clsx from "clsx";
 import React from "react";
 import { Fragment } from "react";
 import AppsIcon from "@material-ui/icons/Apps";
-import { Link, useLocation } from "react-router-dom"; // Import useLocation hook
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,25 +26,12 @@ const useStyles = makeStyles((theme) => ({
   fullList: {
     width: "auto",
   },
-  listItem: {
-    transition: "background-color 0.3s, box-shadow 0.3s",
-  },
-  activeListItem: {
-    backgroundColor: "rgb(113, 47, 145)",
-    color: "#FFFFFF", // Set text color to white for active items
-  },
-  listItemHover: {
-    "&:hover": {
-      backgroundColor: theme.palette.grey[200],
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    },
-  },
 }));
+
 
 function NavBar(props) {
   const { openMenu, closeMenu, className, ...rest } = props;
   const classes = useStyles();
-  const location = useLocation(); // Use useLocation hook to get the current location
 
   return (
     <Fragment>
@@ -67,47 +53,23 @@ function NavBar(props) {
           square
         >
           <List>
-            <ListItem
-              component={Link}
-              to="/"
-              className={clsx(
-                classes.listItem,
-                classes.listItemHover,
-                location.pathname === "/" && classes.activeListItem // Check for exact match with location.pathname
-              )}
-            >
+            <ListItem component={Link} to="/">
               <ListItemIcon>
                 <Home />
               </ListItemIcon>
               <ListItemText>Home</ListItemText>
             </ListItem>
-            <ListItem
-              component={Link}
-              to="/table"
-              className={clsx(
-                classes.listItem,
-                classes.listItemHover,
-                location.pathname === "/table" && classes.activeListItem
-              )}
-            >
+            <ListItem component={Link} to="/table">
               <ListItemIcon>
                 <AppsIcon />
               </ListItemIcon>
               <ListItemText>Table</ListItemText>
             </ListItem>
-            <ListItem
-              component={Link}
-              to="/usermanagement"
-              className={clsx(
-                classes.listItem,
-                classes.listItemHover,
-                location.pathname === "/usermanagement" && classes.activeListItem
-              )}
-            >
+            <ListItem component={Link} to="/usermanagement">
               <ListItemIcon>
-                <PeopleAltIcon />
+                <AppsIcon />
               </ListItemIcon>
-              <ListItemText>Manage User</ListItemText>
+              <ListItemText>Manage Users</ListItemText>
             </ListItem>
           </List>
         </Paper>
