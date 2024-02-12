@@ -13,6 +13,8 @@ const adminRoute = require('./routes/admin.route');
 
 const bookSeatRoute = require('./routes/book-seat.route');
 
+const seat_info_route= require('./routes/seats_info.route')
+
 const { httpLogStream } = require('./utils/logger');
 
 //Database
@@ -39,9 +41,22 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     next();
 });
+
+app.use((req, res, next) => {
+res.header("Access-Control-Allow-Origin", "*");
+res.header("Access-Control-Allow-Headers", "*");
+if (req.method === "OPTIONS") {
+    res.header("Access-COntrol-Allow-Methods", "PUT,POST,GET,PATCH,DELETE");
+    return res.status(200).json({});
+}
+next();
+});
+
 app.use('/admin',adminRoute)
 app.use(bookSeatRoute);
 app.use('/api/auth', authRoute);
+app.use('/seats_info',seat_info_route);
+
 
 app.get('/', (req, res) => {
     res.status(200).send({
