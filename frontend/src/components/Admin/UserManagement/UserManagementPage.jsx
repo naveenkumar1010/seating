@@ -70,8 +70,22 @@ const UserManagementPage = () => {
 
   var handleDeleteUser = (user) => {
     setUserToDelete(user);
-    setShowDeleteConfirmation(true);
+    
+    // Make a DELETE request to delete the user using the API
+
+    console.log(user.associate_id);
+    axios.delete(`http://localhost:3000/admin/delete-user/${user.associate_id}`)
+      .then(() => {
+        // If the request is successful, remove the user from the local state
+        setUsers((prevUsers) => prevUsers.filter((u) => u.id !== user.id));
+        setShowDeleteConfirmation(false); // Close the delete confirmation popup
+      })
+      .catch((error) => {
+        // Handle errors if the request fails
+        console.error("Error deleting user:", error);
+      });
   };
+  
 
   var confirmDelete = () => {
     // Delete the user from the local state
